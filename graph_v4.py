@@ -37,6 +37,7 @@ import numpy as np
 import subprocess
 import webbrowser
 import os
+from PIL import Image, ImageDraw, ImageFilter, ImageOps
 
 class Graphe():
     
@@ -173,6 +174,14 @@ Arcs contenus dans le chemin :
         fichier.write(output)
         fichier.close()
         subprocess.call(["D:\\Programmes\\graphviz\\dot.exe", "-Tpng", "-ographe.png", "data.gv"])
+        im_rgb = Image.open('graphe.png')
+        im_a = Image.open('graphe.png').convert('L').resize(im_rgb.size)
+        im_rgba = im_rgb.copy()
+        im_inv = ImageOps.invert(im_rgba.convert('RGB'))
+        im_inv.putalpha(ImageOps.invert(im_a))
+        im_inv.save('graphe_alpha.png')
+        
+        
         return (sommetDepart,sommetArrivee,distanceChemin,chemin)
     
     def html(self): #mise en forme des résultats sous forme d'une page HTML
@@ -188,10 +197,13 @@ Arcs contenus dans le chemin :
 	</head>
 
 	<body>
+    <h1>dijkstra.</h1>
 		<h2>Graphe étudié : {self.nom}</h2>
-		<img src="graphe.png" alt="Graphe"/>
-		<p>Représentation du graphe avec en rouge le plus long des plus court chemins</p>'''
-    
+        <figure>
+		<img src="graphe_alpha.png" alt="Graphe"/>
+		<figcaption>Représentation du graphe avec en bleu le plus long des plus court chemins</figcaption>
+        </figure>'''
+        
         page+=f'''
 		<h2>Plus long des plus courts chemins : entre {sommetDepart.nom} et {sommetArrivee.nom} de distance {distanceChemin}</h2>
 		<p>Arcs contenus dans le chemin :</p>
@@ -207,6 +219,7 @@ Arcs contenus dans le chemin :
 		<h2>Distance minimale entre les sommets :</h2>'''
     
         page+='''
+        
 		<table>
 			<tr>
 				<th> </th>'''
@@ -246,7 +259,9 @@ Arcs contenus dans le chemin :
 			</tr>'''
             
         page+='''
-		</table>'''
+		</table>
+        
+        '''
     
         page+='''
 	</body>
@@ -259,13 +274,86 @@ Arcs contenus dans le chemin :
         styleCSS=open("style.css", "w")     #création du fichier css
         styleCSS.write('''table{
   border-collapse: collapse;
+
+    margin-left:auto; 
+    margin-right:auto;
+  
+  
 }
 
+
+
 th, td{
-  border: 1px solid black;
+  border: 1px solid rgb(240, 240, 240);
   padding: 10px;
   text-align:center;
-}''')
+}
+
+body{
+background-image: url("background.png");
+background-attachment: fixed;
+font-family:"Gill Sans", sans-serif;
+color:white;
+text-align:center;
+
+}
+
+
+figure{
+text-align:center;
+}
+
+h1 { 
+
+font-family: 'Helvetica Neue', sans-serif; 
+font-size: 200px; 
+font-weight: bold; letter-spacing: -1px; 
+line-height: 1; 
+text-align: center; 
+
+}
+h1:before {
+    display: inline-block;
+    margin: 0 20px 8px 0;
+    height: 3px;
+    content: " ";
+    text-shadow: none;
+    background-color: #999;
+    width: 30%;
+}
+
+
+
+h2 { 
+ 
+font-family: 'Open Sans', sans-serif; 
+font-size: 30px; font-weight: 300; 
+line-height: 32px; 
+margin: 72px 0 20px; 
+text-align: center; 
+
+width:100%;
+color:black;
+background-color:white;
+padding: .5em;
+
+
+
+}
+
+
+
+div{
+text-align: center; 
+align: center;
+}
+
+b{
+color:rgb(0,255,255);
+}
+
+
+''')
         styleCSS.close()
     
     
@@ -384,6 +472,6 @@ class Arc():
             
 
 a=Graphe('grapheProjet.txt')  #nom du fichier texte avec les données à inserer
-# a=Graphe(donnees)
+a=Graphe(donnees)
 a.html()
 a.tableau()
