@@ -1,0 +1,45 @@
+<GRAPHE Name="Graphe1" >
+
+# Description textuelle cohérente
+
+<SOMMETS>
+  A ;
+  B ;
+  C ;
+  D ;
+  E ;
+  F ;
+  G ;
+  H ;
+  I ;
+  J ;
+</SOMMETS>
+
+<ARCS>
+  A : A : 2 ;
+  A : B : 5 ;
+  A : C : 8 ;
+  B : C : 6 ;
+  B : D : 8 ;
+  B : E : 6 ;
+  C : B : 2 ;
+  C : D : 1 ;
+  C : E : 2 ;
+  D : E : 3 ;
+  D : F : 1 ;
+  E : A : 5 ;
+  E : D : 1 ;
+  E : G : 5 ;
+  F : D : 4 ;
+  F : E : 1 ;
+  F : G : 3 ;
+  F : H : 6 ;
+  E : I : 3 ;
+  G : H : 2 ;
+  H : B : 6 ;
+  H : B : 7 ;
+  I : J : 4 ;
+  J : I : 5 ;
+</ARCS>
+
+</GRAPHE>
