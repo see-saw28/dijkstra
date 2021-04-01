@@ -332,7 +332,7 @@ line-height: 32px;
 margin: 72px 0 20px; 
 text-align: center; 
 
-width:100%;
+
 color:black;
 background-color:white;
 padding: .5em;
