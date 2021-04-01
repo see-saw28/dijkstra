@@ -8,3 +8,6 @@ Algorithme de Dijkstra avec affichage dans une page HTML
 * subprocess
 * webbrowser
 * simple parse (file sp.py, git :https://github.com/CDSoft/sp)
+
+## Required soft
+* graphviz
